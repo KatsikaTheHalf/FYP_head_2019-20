@@ -1,10 +1,16 @@
+# Last update: Nov. 8, 2019
+# Face_Client.py is running on PC for facial recognition
+# Do run Face_Server.py at first before running this
+
 import socket
-import face
 import keyboard
 import time
+# import custom function
+import face
+
 # Connect to target IP
 TCP_IP = 'raspberrypi.local'
-TCP_PORT_x = 9982
+TCP_PORT_x = 9980
 TCP_PORT_y = TCP_PORT_x + 1
 BUFFER_SIZE = 4096
 
@@ -25,11 +31,10 @@ while(faces.getCap()):
     faces.observe()
     xCenter = faces.getxCenter()
     yCenter = faces.getyCenter()
-    # senddata = 1000*xCenter+yCenter
     xSocket.send(str(xCenter).encode('utf-8'))
     ySocket.send(str(yCenter).encode('utf-8'))
-    # echo = s.recv(BUFFER_SIZE)
-    # print('Server echo: ', echo)
+
+    # Terminate process
     if keyboard.is_pressed('q'):
         xSocket.send(str(-1).encode('utf-8'))
         break
